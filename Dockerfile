@@ -11,7 +11,7 @@ RUN curl -o /tmp/monstra-3.0.4.zip -SL https://bitbucket.org/Awilum/monstra/down
 
 EXPOSE 80
 COPY vhosts.conf /etc/httpd/conf.d/vhosts.conf
-COPY security.conf /etc/httpd/conf.d/securpty.conf
+COPY security.conf /etc/httpd/conf.d/security.conf
 COPY init.sh /tmp/init.sh
 RUN /tmp/init.sh && rm /tmp/init.sh
 COPY entrypoint.sh /entrypoint.sh
