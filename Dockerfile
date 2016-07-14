@@ -1,7 +1,7 @@
-FROM centos:6
+FROM rmkn/php
 MAINTAINER rmkn
-RUN yum -y update
-RUN yum -y install httpd php php-mbstring php-xml unzip
+
+RUN yum -y install php-xml unzip
 RUN curl -o /tmp/monstra-3.0.4.zip -SL https://bitbucket.org/Awilum/monstra/downloads/monstra-3.0.4.zip \
         && unzip /tmp/monstra-3.0.4.zip -d /var/www/html/ \
         && rm /tmp/monstra-3.0.4.zip \
@@ -9,13 +9,9 @@ RUN curl -o /tmp/monstra-3.0.4.zip -SL https://bitbucket.org/Awilum/monstra/down
         && chmod 777 /var/www/html/monstra \
         && chown -R apache. /var/www/html/monstra
 
-EXPOSE 80
 COPY vhosts.conf /etc/httpd/conf.d/vhosts.conf
-COPY security.conf /etc/httpd/conf.d/security.conf
-COPY init.sh /tmp/init.sh
-RUN /tmp/init.sh && rm /tmp/init.sh
-COPY entrypoint.sh /entrypoint.sh
-ENTRYPOINT ["/entrypoint.sh"]
+
+EXPOSE 80
 
 CMD ["/usr/sbin/httpd", "-D", "FOREGROUND"]
 
